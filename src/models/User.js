@@ -5,11 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password:  DataTypes.STRING,
     image:  DataTypes.STRING,
-    underScore: true
   },
   {
     timestamps: false, 
-    tableName: 'employees',
     underscored: true,
   });
 
