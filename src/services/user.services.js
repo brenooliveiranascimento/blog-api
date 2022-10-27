@@ -1,10 +1,17 @@
 const { User } = require('../models');
 
 const findAUser = async ({ email }) => {
-  const findUser = await User.findOne({
+  const getUser = await User.findOne({
     where: { email },
   });
-  return findUser;
+  return getUser;
+};
+
+const findAllUser = async () => {
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });
+  return users;
 };
 
 const createUser = async (userData) => {
@@ -25,4 +32,5 @@ const createUser = async (userData) => {
 
 module.exports = {
   createUser,
+  findAllUser,
 };
