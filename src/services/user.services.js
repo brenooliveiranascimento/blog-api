@@ -10,7 +10,6 @@ const findAUser = async ({ email }) => {
 const createUser = async (userData) => {
   try {
     const checkUserExist = await findAUser(userData);
-    console.log(checkUserExist);
     if (checkUserExist) return { error: { message: 'User already registered' } };
 
     const newUser = await User.create({
