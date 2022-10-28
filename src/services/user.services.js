@@ -1,6 +1,6 @@
 const { User } = require('../models');
 
-const findAUser = async ({ email }) => {
+const findUserByEmail = async ({ email }) => {
   const getUser = await User.findOne({
     where: { email },
   });
@@ -24,7 +24,7 @@ const findUserById = async (id) => {
 
 const createUser = async (userData) => {
   try {
-    const checkUserExist = await findAUser(userData);
+    const checkUserExist = await findUserByEmail(userData);
     if (checkUserExist) return { error: { message: 'User already registered' } };
 
     const newUser = await User.create({
@@ -42,4 +42,5 @@ module.exports = {
   createUser,
   findAllUser,
   findUserById,
+  findUserByEmail,
 };
