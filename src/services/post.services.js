@@ -2,6 +2,7 @@ const { findUserByEmail } = require('./user.services');
 const categoryServices = require('./categories.services');
 const { BlogPost } = require('../models');
 const { createCategoryPost } = require('./postCategory');
+const { User, Category } = require('../models');
 
 const verifyCategoryExist = async (categoryIds) => {
   const response = await Promise
@@ -10,6 +11,12 @@ const verifyCategoryExist = async (categoryIds) => {
     console.log(check);
     return check;
 };
+
+// const findPostById = async (id) => {
+//   const post = await BlogPost.findByPk(id);
+//   console.log(post);
+//   return post.userId;
+// };
 
 const registerNewPost = async (post, currUser, categoryIds) => {
   const verifyCategorys = await verifyCategoryExist(categoryIds);
@@ -28,6 +35,25 @@ const registerNewPost = async (post, currUser, categoryIds) => {
   return { error: null, message: createPost };
 };
 
+const getAllPosts = async () => {
+  const allPosts = await BlogPost.findAll({
+    include: [
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+    ],
+  });
+  return { error: null, message: allPosts };
+};
+
 module.exports = {
   registerNewPost,
+  getAllPosts,
 };

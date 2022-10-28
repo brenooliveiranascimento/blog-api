@@ -19,6 +19,15 @@ const createNewPost = async (req, res) => {
   console.log(message.dataValues);
   return res.status(201).json(message.dataValues);
 };
+
+const getAllPosts = async (req, res) => {
+  const { error, message } = await postServices.getAllPosts();
+
+  if (error) return res.status(400).json(error.message);
+  return res.status(200).json(message);
+};
+
 module.exports = {
   createNewPost,
+  getAllPosts,
 };
